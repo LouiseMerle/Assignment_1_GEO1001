@@ -391,11 +391,62 @@ plt.legend(labels=['Wet Bulb Globe', 'Crosswind speed', 'Temperature'], frameon=
 plt.tight_layout()
 fig.suptitle('Correlations between sensors', fontsize = 15, y = 1.08)
 
+plt.savefig('KDE and PDF of wind speed per sensor') 
+plt.show()
+
+#A4
+x = list(spearman_dict_C.keys())
+y_cs = list(spearman_dict_C.values())
+y_ts = list(spearman_dict_T.values())
+y_ws = list(spearman_dict_W.values())
+y_cp = list(pearson_dict_C.values())
+y_tp = list(pearson_dict_T.values())
+y_wp = list(pearson_dict_W.values())
+
+x = list(spearman_dict_C.keys())
+y_cs = list(spearman_dict_C.values())
+y_ts = list(spearman_dict_T.values())
+y_ws = list(spearman_dict_W.values())
+y_cp = list(pearson_dict_C.values())
+y_tp = list(pearson_dict_T.values())
+y_wp = list(pearson_dict_W.values())
+
+x = list(spearman_dict_C.keys())
+y_cs = list(spearman_dict_C.values())
+y_ts = list(spearman_dict_T.values())
+y_ws = list(spearman_dict_W.values())
+y_cp = list(pearson_dict_C.values())
+y_tp = list(pearson_dict_T.values())
+y_wp = list(pearson_dict_W.values())
+
+fig , axes = plt.subplots(nrows = 1, ncols = 2, figsize=(10,5))
+
+plt.sca(axes[0])
+ax = sns.scatterplot(x, y_cs)
+ax = sns.scatterplot(x, y_ts)
+ax = sns.scatterplot(x, y_ws)
+ax.set(ylabel = 'Correlation coeffiecient')
+plt.title('Spearman correlation')
+
+plt.sca(axes[1])
+ax = sns.scatterplot(x, y_cp)
+ax = sns.scatterplot(x, y_tp)
+ax = sns.scatterplot(x, y_wp)
+ax.set(ylabel = 'Correlation coeffiecient')
+plt.title('Pearson correlation')
+
+plt.legend(labels=['Wet Bulb Globe', 'Crosswind speed', 'Temperature'], frameon=False)
+
+plt.tight_layout()
+fig.suptitle('Correlations between sensors', fontsize = 15, y = 1.08)
+
 plt.savefig('Pearson and Spearman correlations') 
 plt.show()
 
 # A4
+
 #CDF 
+
 fig , axes = plt.subplots(nrows = 1, ncols = 5, figsize=(20,5))
 plt.sca(axes[0])
 a1 = plt.hist(x=sensor_a['Wind Speed'], bins=50, cumulative=True, density = True, alpha=0.7, rwidth=0.85)
