@@ -41,6 +41,15 @@ sensor_e[to_numeric_columns] = sensor_e[to_numeric_columns].apply(pd.to_numeric)
 sensor_e['FORMATTED DATE-TIME'] = pd.to_datetime(sensor_e['FORMATTED DATE-TIME'])
 #sensor_e.set_index('FORMATTED DATE-TIME')
 
+print(sensor_a.isna().sum())
+print(sensor_b.isna().sum())
+print(sensor_c.isna().sum())
+print(sensor_d.isna().sum())
+print(sensor_e.isna().sum())
+# no NaN values in df
+
+# No NAN values in sensor lists 
+
 #calculate mean,m variance and std
 sensor_list = [sensor_a, sensor_b, sensor_c, sensor_d, sensor_e]
 name_list = ['sensor_a','sensor_b', 'sensor_c', 'sensor_d', 'sensor_e']
@@ -391,55 +400,6 @@ plt.legend(labels=['Wet Bulb Globe', 'Crosswind speed', 'Temperature'], frameon=
 plt.tight_layout()
 fig.suptitle('Correlations between sensors', fontsize = 15, y = 1.08)
 
-plt.savefig('KDE and PDF of wind speed per sensor') 
-plt.show()
-
-#A4
-x = list(spearman_dict_C.keys())
-y_cs = list(spearman_dict_C.values())
-y_ts = list(spearman_dict_T.values())
-y_ws = list(spearman_dict_W.values())
-y_cp = list(pearson_dict_C.values())
-y_tp = list(pearson_dict_T.values())
-y_wp = list(pearson_dict_W.values())
-
-x = list(spearman_dict_C.keys())
-y_cs = list(spearman_dict_C.values())
-y_ts = list(spearman_dict_T.values())
-y_ws = list(spearman_dict_W.values())
-y_cp = list(pearson_dict_C.values())
-y_tp = list(pearson_dict_T.values())
-y_wp = list(pearson_dict_W.values())
-
-x = list(spearman_dict_C.keys())
-y_cs = list(spearman_dict_C.values())
-y_ts = list(spearman_dict_T.values())
-y_ws = list(spearman_dict_W.values())
-y_cp = list(pearson_dict_C.values())
-y_tp = list(pearson_dict_T.values())
-y_wp = list(pearson_dict_W.values())
-
-fig , axes = plt.subplots(nrows = 1, ncols = 2, figsize=(10,5))
-
-plt.sca(axes[0])
-ax = sns.scatterplot(x, y_cs)
-ax = sns.scatterplot(x, y_ts)
-ax = sns.scatterplot(x, y_ws)
-ax.set(ylabel = 'Correlation coeffiecient')
-plt.title('Spearman correlation')
-
-plt.sca(axes[1])
-ax = sns.scatterplot(x, y_cp)
-ax = sns.scatterplot(x, y_tp)
-ax = sns.scatterplot(x, y_wp)
-ax.set(ylabel = 'Correlation coeffiecient')
-plt.title('Pearson correlation')
-
-plt.legend(labels=['Wet Bulb Globe', 'Crosswind speed', 'Temperature'], frameon=False)
-
-plt.tight_layout()
-fig.suptitle('Correlations between sensors', fontsize = 15, y = 1.08)
-
 plt.savefig('Pearson and Spearman correlations') 
 plt.show()
 
@@ -506,7 +466,6 @@ df_temp_intervals = pd.DataFrame([sensor_list, lower_list, upper_list]).transpos
 df_temp_intervals.columns = ['Sensor', 'Lower boundary', 'Upper boundary']
 df_temp_intervals.to_csv('confidence_intervals_temperatures.csv')
 
-sensor_names = [sensor_a, sensor_b, sensor_c, sensor_d, sensor_e]
 lower_list_WS = []
 upper_list_WS = []
 
@@ -515,18 +474,59 @@ for sensor in sensor_names:
     std = np.std(sensor['Wind Speed'])
     sample_size = len(sensor['Wind Speed'])
     lower, upper = stats.t.interval(0.95, sample_size-1, loc=mean, scale= std)
-
+    if lower < 0: 
+        lower = 0
+        
     lower_list_WS.append(lower)
     upper_list_WS.append(upper)
-
+    
 df_windspeed_intervals = pd.DataFrame([sensor_list, 
                                   lower_list_WS, 
                                   upper_list_WS]).transpose()
 df_windspeed_intervals.columns = ['Sensor', 'Lower boundary', 
                                   'Upper boundary']
 
-df_windspeed_intervals.to_csv('confidence_intervals_windspeed.csv')
+df_windspeed_intervals.to_csv('confidence_intervals_windspeed_95.csv')
 
+lower_list_WS = []
+upper_list_WS = []
 
+for sensor in sensor_names: 
+    mean = np.mean(sensor['Wind Speed'])
+    std = np.std(sensor['Wind Speed'])
+    sample_size = len(sensor['Wind Speed'])
+    lower, upper = stats.t.interval(0.70, sample_size-1, loc=mean, scale= std)
+    if lower < 0: 
+        lower = 0
+        
+    lower_list_WS.append(lower)
+    upper_list_WS.append(upper)
+    
+df_windspeed_intervals_70 = pd.DataFrame([sensor_list, 
+                                  lower_list_WS, 
+                                  upper_list_WS]).transpose()
+df_windspeed_intervals_70.columns = ['Sensor', 'Lower boundary', 
+                                  'Upper boundary']
+
+df_windspeed_intervals_70.to_csv('confidence_intervals_windspeed_70.csv')
+
+#Hypothesis test
+
+inverted_sensor_list = ['E', 'D', 'C', 'B', 'A']
+
+hypothesis_dict_T = {}
+for sensor1 in inverted_sensor_list: 
+    if sensor1 != 'A':
+        values_list = []
+        index = inverted_sensor_list.index(sensor1)
+        sensor2 = inverted_sensor_list[index + 1]
+        t, p = stats.ttest_rel(Temperature[sensor1], Temperature[sensor2])
+        values_list.append(t)
+        values_list.append(p)
+        key = sensor1 + '-' + sensor2
+        hypothesis_dict_T[key] = values_list
+hypo_test = pd.DataFrame.from_dict(hypothesis_dict_T).transpose()
+hypo_test.columns = ['t-statistic', 'p-value']
+print(hypo_test)
 
 
