@@ -95,7 +95,7 @@
 
 % The default setting of LaTeX is to indent new paragraphs. This is useful for articles. But not really nice for homework problem sets. The following command sets the indent to 0.
 \usepackage{setspace}
-\setlength{\parindent}{0in}
+\setlength{\parindent}{1in}
 
 % Package to place figures where you want them.
 \usepackage{float}
@@ -353,9 +353,12 @@ TEXT
 
 \item {\it What can you say about the sensors’ correlations?}
 
-When analysing the 
+When analyzing the correlations it can be observed that the correlations between sensors for the temperature and the wet bulb globe temperature are high, and all sensors correlate strongly with each other on these measurements, as the correlations are above 0.9 and close to 1.0 for both Spearman and Pearson correlations. However, the data from one sensor stands out, sensor E, all correlations between sensor E and another sensor are lower than the correlations between all other sensors. \par
 
-\item {\it If we told you that that the sensors are located as in \ref{fig:sensor_locations}, hypothesize which location would you assign to each sensor and reason your hypothesis using the correlations.}
+In contrast to the correlations between sensors for temperature and the wet bulb globe temperature, the correlations for crosswind speed are relatively low. Almost all correlations for crosswind speed are below 0.6, except for the spearman correlation between C and D at 0.63, the lowest correlations are, in correspondence with findings for temperature and wet bulb globe temperature with sensor E. 
+
+
+\item {\it If we told you that that the sensors are located as in figure \ref{fig:sensor_locations}, hypothesize which location would you assign to each sensor and reason your hypothesis using the correlations.}
 
 
  \begin{figure}[H] 
@@ -383,7 +386,7 @@ where will the sensors be located
 	\label{fig:CDF_W}
 \end{figure} 
 
-
+The confidence intervals are calculated with the stats.t.interval function from Scipy. This function assumes the data has a student's t distribution, however as seen in question 6, the distribution for the wind speed is right skewed. This led to incorrect negative values for the lower limit of the confidence intervals for the wind speed each sensor, therefore the CDF graphs were used to determine the lower limit at a 95\% confidence level. The plots in \ref{fig:CDF_W} show that about 20\% of the values are 0, hence the value at 2.5\% is 0, therefore this value is used as a lower limit in the confidence interval. The distributions for the temperature values are close to a student's t distribution, and only mildly skewed, hence the values for the confidence interval calculated via te stats.t.interval function do not need to be adjusted. 
 
 \begin{table}[H]
 	\centering
@@ -417,7 +420,7 @@ where will the sensors be located
 
 \begin{table}[H]
 	\centering
-	\caption{t-statistic and p-values of the tested sensor pairs}
+	\caption{t-statistic and p-values of the tested sensor pairs for temperature}
 	\begin{tabular}{lll}
 			\multicolumn{1}{c}{\textbf{Sensor pair}}  & \multicolumn{1}{c}{\textit{t-statistic}} & \textit{p-value} \\ \hline
 		E-D & 16.750  & \num{9.731e-60}  \\
@@ -425,13 +428,27 @@ where will the sensors be located
 		C-B & -10.581 & \num{1.274e-25} \\
 		B-A & 7.598   & \num{4.24e-14}
 	\end{tabular}
-\label{hypo_test}
+\label{hypo_test_T}
 \end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{t-statistic and p-values of the tested sensor pairs for wind speed}
+	\begin{tabular}{lll}
+		\multicolumn{1}{c}{\textbf{Sensor pair}}  & \multicolumn{1}{c}{\textit{t-statistic}} & \textit{p-value} \\ \hline
+	E-D & -44.709 & \num{1.839e-320}             \\
+	D-C & 9.537  & \num{3.374e-21}  \\
+	C-B & 6.069    & \num{1.486e-09} \\
+	B-A & -2.485 & 0.013
+	\end{tabular}
+	\label{hypo_test_W}
+\end{table}
+
 
 
 \item {\it What could you conclude from the p-values?}
 
-p is low so null must go 
+The hypothesis test are done with the stats.ttest\_rel function from Scipy, as the samples are measures at the same location and are therefore not truly independent. The p-values for all hypothesis tests for the temperature and wind speed are below 0.025, and therefore should the null hypothesis that the tested sensors have identical means be rejected.
 
 \item {\it Bonus:\\ Your “employer” wants to estimate the day of maximum and minimum potential energy consumption due to air conditioning usage. To hypothesize regarding those days, you are asked to identify the hottest and coolest day of the measurement time series provided. How would you do that? Reason and program the python routine that would allow you to identify those days}
 

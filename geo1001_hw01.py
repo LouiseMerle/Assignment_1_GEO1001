@@ -402,7 +402,7 @@ ax = sns.scatterplot(x, y_wp)
 ax.set(ylabel = 'Correlation coeffiecient')
 plt.title('Pearson correlation')
 
-plt.legend(labels=['Wet Bulb Globe', 'Crosswind speed', 'Temperature'], frameon=False)
+plt.legend(labels=['Crosswind Speed', 'Temperature', 'Wet Bulb Globe Temperature'], frameon=False)
 
 plt.tight_layout()
 fig.suptitle('Correlations between sensors', fontsize = 15, y = 1.08)
@@ -438,7 +438,7 @@ plt.ylabel('CDF')
 
 plt.sca(axes[3])
 d1 = plt.hist(x=sensor_d['Wind Speed'], bins=50, cumulative=True, density = True ,alpha=0.7, rwidth=0.85)
-plt.plot(d1[1][1:]-(d1[1][1:]-a1[1][:-1])/2,d1[0], color='k')
+plt.plot(d1[1][1:]-(d1[1][1:]-d1[1][:-1])/2,d1[0], color='k')
 plt.title('Sensor D')
 plt.xlabel('Wind Speed')
 plt.ylabel('CDF')
@@ -539,6 +539,28 @@ for sensor1 in inverted_sensor_list:
 hypo_test = pd.DataFrame.from_dict(hypothesis_dict_T).transpose()
 hypo_test.columns = ['t-statistic', 'p-value']
 print(hypo_test)
+
+#hypothesis test wind speed
+Wind_speed2 = Wind_speed.drop_na()
+
+hypothesis_dict_W = {}
+for sensor1 in inverted_sensor_list:
+    if sensor1 != 'A':
+        print(sensor1)
+        values_list = []
+        index = inverted_sensor_list.index(sensor1)
+        sensor2 = inverted_sensor_list[index + 1]
+        print(sensor2)
+        t, p = stats.ttest_rel(Wind_speed2[sensor1], Wind_speed2[sensor2])
+        print(sensor1, '-', sensor2, 't: ', t, ' p: ', p)
+        values_list.append(t)
+        values_list.append(p)
+        key = sensor1 + '-' + sensor2
+        hypothesis_dict_W[key] = values_list
+        
+hypo_test_W = pd.DataFrame.from_dict(hypothesis_dict_W).transpose()
+hypo_test_W.columns = ['t-statistic', 'p-value']
+hypo_test_W.to_csv('hypothesis_test_W.csv')
 
 # Bonus 
 
