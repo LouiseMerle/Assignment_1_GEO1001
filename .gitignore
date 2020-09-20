@@ -5,4 +5,7 @@
 *.bbl
 *.blg
 *.log
-*.pfd
+*.pdf
+*.aux
+*.bfc
+*.dvi
