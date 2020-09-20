@@ -9,3 +9,5 @@
 *.aux
 *.bfc
 *.dvi
+*.ipynb
+/.ipynb_checkpoints/
