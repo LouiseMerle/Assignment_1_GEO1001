@@ -11,3 +11,4 @@
 *.dvi
 *.ipynb
 /.ipynb_checkpoints/
+*.pages
