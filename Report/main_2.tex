@@ -1,4 +1,3 @@
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Intro to LaTeX and Template for Homework Assignments
 %% Quantitative Methods in Political Science
@@ -93,8 +92,6 @@
 %\usepackage[square,numbers]{natbib}
 %\bibliographystyle{abbrvnat}
 
-%\usepackage{natbib}
-%\bibliographystyle{plainnat}
  
 
 % The default setting of LaTeX is to indent new paragraphs. This is useful for articles. But not really nice for homework problem sets. The following command sets the indent to 0.
@@ -173,15 +170,112 @@ GEO1001.2020 \\ MSc Geomatics \\ Delft University of Technology \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Up until this point you only have to make minor changes for every week (Number of the homework). Your write up essentially starts here.
-The data used in this analysis is data from five Kestrel 5400 sensors placed in the town of Rijsenhout, The Netherlands over the a period from June 10th to July 17th \ldots % \citep{data}
+The data used in this analysis is data from five Kestrel 5400 sensors placed in the town of Rijsenhout, The Netherlands over the a period from June 10th to July 17th \ldots  \cite{data}
 
 \begin{enumerate}
 
 \item {\it Compute mean statistics (mean, variance and standard deviation for each of the sensors variables), what do you observe from the results?}. % <--- For future Homework sets you of course have to change the questions.
 
+some intro text
+
+\begin{table}[H]
+\centering
+\caption{Means calculated for each measurement per sensor.}
+\begin{tabular}{llllllll}
+\multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textit{Sensor A}} & \multicolumn{1}{c}{\textit{Sensor B}} & \textit{Sensor C} & \textit{Sensor D} & \textit{Sensor E}  \\ \hline
+Wind Direction, True                  & 209.406               & 183.412               & 183.589             & 198.337            & 223.965 \\
+Wind Speed             & 1.290                                 &1.242                     & 1.371             & 1.582            & 0.596 \\
+Crosswind Speed             &0.965          &0.836                     & 0.963             & 1.211            & 0.439 \\
+Headwind Speed             &0.164          &-0.130                     & -0.263             & -.0301            & 0.195 \\
+Temperature             &17.969          &18.065                     &17.913             &17.996            & 18.354 \\
+Globe Temperature             &21.545          &21.799                     &21.587             &21.359            &21.176 \\
+Wind Chill             &17.838          &17.946                     &17.773             &17.835            & 18.294 \\
+Relative Humidity             &78.185          &77.878                     &77.963             &77.942            & 76.793 \\
+Heat Stress Index             &17.900          &18.004                     &17.828             &17.921            & 18.386 \\
+Dew Point             &13.553          &13.531                     &13.458             &13.509            & 13.559 \\
+Psychro Wet Bulb Temperature             &15.271          &15.296                     &15.197             &15.260            & 15.407 \\
+Station Pressure             &1016.168          &1016.657                 &1016.689             &1016.728            & 1016.166 \\
+Barometric Pressure             &1016.128          &1016.616                &1016.651             &1016.689            & 1016.128 \\
+Altitude             &-25.987          &-30.058                 &-30.338             &-30.653            & -25.961 \\
+Station Pressure             &137.317          &135.581                 &129.623             &132.411            & 150.840 \\
+NA Wet Bulb Temperature             &15.981          &15.997                 &15.934             &15.916            & 15.937 \\
+WBGT             &17.254          &17.322                     &17.225             &17.177            & 17.186 \\
+TWL             &301.393        &299.452                     &301.900             &305.255            & 284.115 \\
+Wind Direction, Mag                 & 208.905               & 183.217               & 183.084             & 198.826            & 223.987 
+
+\end{tabular}
+\label{mean-table}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Standard deviations calculated for each measurement per sensor.}
+\begin{tabular}{llllll}
+\multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textit{Sensor A}} & \multicolumn{1}{c}{\textit{Sensor B}} & \textit{Sensor C} & \textit{Sensor D} & \textit{Sensor E}  \\ \hline
+Wind Direction‚ True             & 100.523   & 99.866    & 87.751    & 90.17     & 96.46     \\
+Wind Speed                   & 1.118     & 1.141     & 1.196     & 1.319     & 0.715     \\
+Crosswind Speed              & 0.962     & 0.937     & 1.021     & 1.205     & 0.562     \\
+Headwind Speed               & 1.017     & 1.121     & 1.127     & 1.11      & 0.565     \\
+Temperature                  & 3.982     & 4.077     & 4.012     & 4.012     & 4.363     \\
+Globe Temperature            & 8.256     & 8.125     & 8.241     & 7.822     & 7.949     \\
+Wind Chill                   & 4.032     & 4.127     & 4.066     & 4.068     & 4.374     \\
+Relative Humidity            & 19.387    & 20.21     & 19.351    & 19.741    & 20.158    \\
+Heat Stress Index            & 3.872     & 3.928     & 3.918     & 3.887     & 4.297     \\
+Dew Point                    & 3.118     & 3.104     & 3.175     & 3.173     & 3.069     \\
+Psychro Wet Bulb Temperature & 2.635     & 2.601     & 2.69      & 2.654     & 2.645     \\
+Station Pressure             & 6.201     & 6.069     & 6.138     & 5.914     & 6.239     \\
+Barometric Pressure          & 6.201     & 6.067     & 6.137     & 5.911     & 6.239     \\
+Altitude                     & 51.6      & 50.445    & 51.063    & 49.181    & 51.877    \\
+Density Altitude             & 162.786   & 163.867   & 164.243   & 162.805   & 172.345   \\
+NA Wet Bulb Temperature      & 3.164     & 3.131     & 3.237     & 3.16      & 3.071     \\
+WBGT                         & 4.016     & 3.979     & 4.067     & 3.937     & 3.935     \\
+TWL                          & 28.538    & 28.102    & 27.681    & 24.815    & 35.908    \\
+Wind Direction‚ Mag              & 100.507   & 99.857    & 87.758    & 90.178    & 96.251   
+\end{tabular}
+\label{std-table}
+\end{table}
+
+\begin{table}[H]
+
+\centering
+\caption{Variance deviations calculated for each measurement per sensor.}
+\begin{tabular}{llllll}
+\multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textit{Sensor A}} & \multicolumn{1}{c}{\textit{Sensor B}} & \textit{Sensor C} & \textit{Sensor D} & \textit{Sensor E}  \\ \hline
+Direction ‚ True             & 10108.94  & 9977.218  & 7703.363  & 8133.89   & 9308.285  \\
+Wind Speed                   & 1.251     & 1.302     & 1.431     & 1.74      & 0.511     \\
+Crosswind Speed              & 0.927     & 0.879     & 1.043     & 1.452     & 0.316     \\
+Headwind Speed               & 1.035     & 1.257     & 1.272     & 1.233     & 0.319     \\
+Temperature                  & 15.864    & 16.629    & 16.105    & 16.106    & 19.043    \\
+Globe Temperature            & 68.191    & 66.049    & 67.941    & 61.202    & 63.216    \\
+Wind Chill                   & 16.264    & 17.036    & 16.541    & 16.557    & 19.137    \\
+Relative Humidity            & 376.01    & 408.623   & 374.623   & 389.856   & 406.494   \\
+Heat Stress Index            & 14.997    & 15.439    & 15.356    & 15.118    & 18.475    \\
+Dew Point                    & 9.723     & 9.637     & 10.084    & 10.072    & 9.423     \\
+Psychro Wet Bulb Temperature & 6.944     & 6.77      & 7.239     & 7.044     & 6.997     \\
+Station Pressure             & 38.471    & 36.842    & 37.691    & 34.988    & 38.94     \\
+Barometric Pressure          & 38.468    & 36.829    & 37.676    & 34.952    & 38.935    \\
+Altitude                     & 2663.641  & 2545.708  & 2608.535  & 2419.724  & 2692.353  \\
+Density Altitude             & 26510.044 & 26863.31  & 26986.603 & 26516.126 & 29714.928 \\
+NA Wet Bulb Temperature      & 10.012    & 9.809     & 10.48     & 9.987     & 9.432     \\
+WBGT                         & 16.135    & 15.835    & 16.547    & 15.507    & 15.49     \\
+TWL                          & 814.767   & 790.069   & 766.534   & 616.01    & 1289.913  \\
+Direction ‚ Mag              & 10105.677 & 9975.447  & 7704.62   & 8135.316  & 9268.008 
+\end{tabular}
+\label{var-table}
+\end{table}
+
 Please type your answer here.
 
 \item {\it Create 1 plot that contains histograms for the 5 sensors Temperature values. Compare histograms with 5 and 50 bins, why is the number of bins important?}
+
+In figure \ref{fig:hist5and50} two histograms of the temperature measurements are shown. When comparing the two histograms the importance of the number of bins can be observed. Details about the distribution of the data points are better visible in the histogram with 50 bins, however in the histogram with 5 bins many nuances of the distribution are lost. 
+TO calculate the number of bins needed to plo
+
+
+
+
+
+Rice's law $\sqrt[3]{{2746}} * 2 $
 
  \begin{figure}[H] 
     \centering
@@ -200,9 +294,23 @@ If you have code put it here
 
 some text and image 
 
+ \begin{figure}[H] 
+    \centering
+    \includegraphics[scale=0.6]{polygon hist temperature.png} 
+    \caption{Frequency polygon with 27 bins of the temperature measured by all 5 sensors.} % Creates caption underneath graph
+    \label{fig:freqpoly}
+  \end{figure}
+
+
+
 \item {\it Generate 3 plots that include the 5 sensors boxplot for: Wind Speed, Wind Direction and Temperature.}
 
-some boxplots 
+ \begin{figure}[H] 
+    \centering
+    \includegraphics[width=1\textwidth]{Boxplots.png} 
+    \caption{Boxplots chowing data distribution for wind speed, wind direction and temperature.} % Creates caption underneath graph
+    \label{fig:boxplots}
+  \end{figure} 
 
 \item {\it Plot PMF, PDF and CDF for the 5 sensors Temperature values in independent plots (or subplots). Describe the behaviour of the distributions, are they all similar? what about their tails?}
 
@@ -214,11 +322,16 @@ PDF en KDE image and some text
 
 \item {\it Compute the correlations between all the sensors for the variables: Temperature, Wet Bulb Globe, Crosswind Speed. Perform correlation between sensors with the same variable, not between two different variables; for example, correlate Temperature time series between sensor A and B. Use Pearson’s and Spearmann’s rank coefficients. Make a scatter plot with both coefficients with the 3 variables.}
 
-insert spearman and pearson plots 
+ \begin{figure}[H] 
+    \centering
+    \includegraphics[width=1\textwidth]{Pearson and Spearman correlations.png} 
+    \caption{Scatterplot of Spearman and Pearson correlations between sensors dislayed on x-axis.} % Creates caption underneath graph
+    \label{fig:boxplots}
+  \end{figure} 
 
 \item {\it What can you say about the sensors’ correlations?}
 
-some info about the correlations 
+When analysing the 
 
 \item {\it If we told you that that the sensors are located as follows, hypothesize which location would you assign to each sensor and reason your hypothesis using the correlations.}
 
@@ -256,22 +369,33 @@ Code van bonus question en info
 
 
 
-% Now we also want to include the graph in our write up.
- \begin{figure}[H] % places figure environment here   
-    \centering % Centers Graphic
-    \includegraphics[width=0.9\textwidth]{box1.pdf} 
-    \caption{Boxplot of Incumbent Vote share} % Creates caption underneath graph
-  \end{figure}
-
 
 % Now all we need to answer the question is a neat table. The easiest way to get a nice looking table is to browse to http://www.tablesgenerator.com. Generate your table just like in Word or any other WYSIWYG editor. Then copy and include the code here. I already did that for you.
 
 \begin{table}[H]
 \centering
 \begin{tabular}{llllllll}
-\multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textit{Mean}} & \multicolumn{1}{c}{\textit{Median}} & \textit{Mode} & \textit{Var} & \textit{SD} & \textit{Range} & \textit{IQR} \\ \hline
-Vote                                  & x                                 & x                                   & x             & x            & x           & x              & x            \\
-Growth                                & x                                 & x                                   & x             & x            & x           & x              & x            
+\multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textit{Sensor A}} & \multicolumn{1}{c}{\textit{Sensor B}} & \textit{Sensor C} & \textit{Sensor D} & \textit{Sensor E}  \\ \hline
+Wind Direction, True                  & 209.406               & 183.412               & 183.589             & 198.337            & 223.965 \\
+Wind Speed             & 1.290                                 &1.242                     & 1.371             & 1.582            & 0.596 \\
+Crosswind Speed             &0.965          &0.836                     & 0.963             & 1.211            & 0.439 \\
+Headwind Speed             &0.164          &-0.130                     & -0.263             & -.0301            & 0.195 \\
+Temperature             &17.969          &18.065                     &17.913             &17.996            & 18.354 \\
+Globe Temperature             &21.545          &21.799                     &21.587             &21.359            &21.176 \\
+Wind Chill             &17.838          &17.946                     &17.773             &17.835            & 18.294 \\
+Relative Humidity             &78.185          &77.878                     &77.963             &77.942            & 76.793 \\
+Heat Stress Index             &17.900          &18.004                     &17.828             &17.921            & 18.386 \\
+Dew Point             &13.553          &13.531                     &13.458             &13.509            & 13.559 \\
+Psychro Wet Bulb Temperature             &15.271          &15.296                     &15.197             &15.260            & 15.407 \\
+Station Pressure             &1016.168          &1016.657                 &1016.689             &1016.728            & 1016.166 \\
+Barometric Pressure             &1016.128          &1016.616                &1016.651             &1016.689            & 1016.128 \\
+Altitude             &-25.987          &-30.058                 &-30.338             &-30.653            & -25.961 \\
+Station Pressure             &137.317          &135.581                 &129.623             &132.411            & 150.840 \\
+NA Wet Bulb Temperature             &15.981          &15.997                 &15.934             &15.916            & 15.937 \\
+WBGT             &17.254          &17.322                     &17.225             &17.177            & 17.186 \\
+TWL             &301.393        &299.452                     &301.900             &305.255            & 284.115 \\
+Wind Direction, Mag                 & 208.905               & 183.217               & 183.084             & 198.826            & 223.987 
+
 \end{tabular}
 \caption{Measures of central tendency and variability.}
 \label{my-label}
@@ -289,6 +413,9 @@ Growth                                & x                                 & x   
 % Put any big code you have here.
 
 % \end{verbatim}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
 
 
 \end{document}

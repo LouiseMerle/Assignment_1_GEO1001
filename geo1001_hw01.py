@@ -26,29 +26,24 @@ to_numeric_columns = ['Direction ‚ True', 'Wind Speed',
 
 sensor_a[to_numeric_columns] = sensor_a[to_numeric_columns].apply(pd.to_numeric)
 sensor_a['FORMATTED DATE-TIME'] = pd.to_datetime(sensor_a['FORMATTED DATE-TIME'])
-#sensor_a.set_index('FORMATTED DATE-TIME')
 
 sensor_b[to_numeric_columns] = sensor_b[to_numeric_columns].apply(pd.to_numeric)
 sensor_b['FORMATTED DATE-TIME'] = pd.to_datetime(sensor_b['FORMATTED DATE-TIME'])
-#sensor_b.set_index('FORMATTED DATE-TIME')
+
 sensor_c[to_numeric_columns] = sensor_c[to_numeric_columns].apply(pd.to_numeric)
 sensor_c['FORMATTED DATE-TIME'] = pd.to_datetime(sensor_c['FORMATTED DATE-TIME'])
-#sensor_c.set_index('FORMATTED DATE-TIME')
+
 sensor_d[to_numeric_columns] = sensor_d[to_numeric_columns].apply(pd.to_numeric)
 sensor_d['FORMATTED DATE-TIME'] = pd.to_datetime(sensor_d['FORMATTED DATE-TIME'])
-#sensor_d.set_index('FORMATTED DATE-TIME')
+
 sensor_e[to_numeric_columns] = sensor_e[to_numeric_columns].apply(pd.to_numeric)
 sensor_e['FORMATTED DATE-TIME'] = pd.to_datetime(sensor_e['FORMATTED DATE-TIME'])
-#sensor_e.set_index('FORMATTED DATE-TIME')
 
-print(sensor_a.isna().sum())
-print(sensor_b.isna().sum())
-print(sensor_c.isna().sum())
-print(sensor_d.isna().sum())
-print(sensor_e.isna().sum())
-# no NaN values in df
-
-# No NAN values in sensor lists 
+# check for NaN values
+if sensor_a.isnull().values.ravel().sum() and sensor_b.isnull().values.ravel().sum() and sensor_c.isnull().values.ravel().sum() and sensor_d.isnull().values.ravel().sum() and sensor_e.isnull().values.ravel().sum():
+    print('No NaN values in dataset')
+else:
+    print('NaN values in dataset')
 
 #calculate mean,m variance and std
 sensor_list = [sensor_a, sensor_b, sensor_c, sensor_d, sensor_e]
@@ -66,7 +61,9 @@ for sensor in sensor_list:
     i += 1
 
 mean_df = pd.DataFrame.from_dict(mean_dict, orient = 'index', columns = to_numeric_columns)
-print('Mean values per sensor per measurent', mean_df)
+mean_df2 = mean_df.transpose()
+mean_df2.to_csv('mean_variables.csv')
+print('Mean values per sensor per measurent', mean_df2)
 
 i = 0
 var_dict = {} 
@@ -80,7 +77,9 @@ for sensor in sensor_list:
     i += 1
 
 var_df = pd.DataFrame.from_dict(var_dict, orient = 'index', columns = to_numeric_columns)
-print('Variance per sensor per measurent', var_df)
+var_df2 = var_df.transpose()
+print('Variance per sensor per measurent', var_df2)
+var_df2.to_csv('variance_variables.csv')
 
 i = 0
 std_dict = {} 
@@ -94,7 +93,9 @@ for sensor in sensor_list:
     i += 1
 
 std_df = pd.DataFrame.from_dict(std_dict, orient = 'index', columns = to_numeric_columns)
-print('Standard deviation per sensor per measurent', var_df)
+std_df2 = std_df.transpose()
+print('Standard deviation per sensor per measurent', std_df2)
+std_df2.to_csv('std_variables.csv')
 
 #histograms for temperature 
 Temperature = pd.concat([sensor_a['Temperature'], sensor_b['Temperature'], sensor_c['Temperature'],
@@ -102,19 +103,19 @@ Temperature = pd.concat([sensor_a['Temperature'], sensor_b['Temperature'], senso
                        axis=1, keys=['A', 'B', 'C', 'D', 'E']).dropna()
 
 ax = sns.histplot(data=Temperature, bins = 5, palette="Set3", multiple="stack")
-ax.set(title = 'Histogram of temperature per sensor with 5 bins', xlabel = 'Temperature [deg C]')
+ax.set(xlabel = 'Temperature')
 plt.savefig('Histogram of temperature per sensor with 5 bins')
 plt.show()
 
 ax = sns.histplot(data=Temperature, bins = 50, palette="Set3", multiple="stack")
-ax.set(title = 'Histogram of temperature per sensor with 50 bins', xlabel = 'Temperature [deg C]')
+ax.set(xlabel = 'Temperature')
 plt.savefig('Histogram of temperature per sensor with 50 bins')
 plt.show()
 
 #frequency polygons
 ax = sns.displot(data=Temperature, element = 'poly', palette="Set3",
-                 multiple="stack", bins = 20)
-ax.set(title = 'Frequency polygons of temperature', xlabel = 'Temperature [deg C]')
+                 multiple="stack", bins = 27)
+ax.set(xlabel = 'Temperature')
 plt.savefig('polygon hist temperature')
 plt.show()
 
@@ -131,17 +132,17 @@ Wind_speed = pd.concat([sensor_a['Wind Speed'], sensor_b['Wind Speed'], sensor_c
 fig , axes = plt.subplots(nrows = 1, ncols = 3, figsize=(20,5))
 plt.sca(axes[0])
 ax = sns.boxplot(data=Wind_speed, palette="Set3")
-ax.set(xlabel = 'Sensor', ylabel = 'Wind Speed [m/s]', 
+ax.set(xlabel = 'Sensor', ylabel = 'Wind Speed',
       title = 'Boxplot of the wind speed in m/s per sensor')
 
 plt.sca(axes[1])
 ax = sns.boxplot(data=wind_direction, palette="Set3")
-ax.set(xlabel = 'Sensor', ylabel = 'Wind Direction [deg]',
+ax.set(xlabel = 'Sensor', ylabel = 'Wind Direction',
       title = 'Boxplot of the wind direction in degrees per sensor') 
 
 plt.sca(axes[2])
 ax = sns.boxplot(data=Temperature, palette="Set3")
-ax.set(xlabel = 'Sensor', ylabel = 'Temperature [deg C]', 
+ax.set(xlabel = 'Sensor', ylabel = 'Temperature',
        title = 'Boxplot of temperature in degrees C per sensor')
  
 plt.savefig('Boxplots') 
@@ -161,21 +162,21 @@ plt.sca(axes[0])
 plt.bar(pmf_a.index, pmf_a.values)
 plt.title('Sensor A')
 plt.xlabel('Temperature')
-plt.ylabel('PMF')
+plt.ylabel('Probability')
 plt.xticks(np.arange(min(sensor_a.Temperature), max(sensor_a.Temperature)+1, 5.0))
 
 plt.sca(axes[1])
 plt.bar(pmf_b.index, pmf_b.values)
 plt.title('Sensor B')
 plt.xlabel('Temperature')
-plt.ylabel('PMF')
+plt.ylabel('Probability')
 plt.xticks(np.arange(min(sensor_b.Temperature), max(sensor_b.Temperature)+1, 5.0))
 
 plt.sca(axes[2])
 plt.bar(pmf_c.index, pmf_c.values)
 plt.title('Sensor C')
 plt.xlabel('Temperature')
-plt.ylabel('PMF')
+plt.ylabel('Probability')
 plt.xticks(np.arange(min(sensor_c.Temperature), max(sensor_c.Temperature)+1, 5.0))
 plt.yticks([0.000, 0.005, 0.010, 0.015, 0.020])
 
@@ -183,14 +184,14 @@ plt.sca(axes[3])
 plt.bar(pmf_d.index, pmf_d.values)
 plt.title('Sensor D')
 plt.xlabel('Temperature')
-plt.ylabel('PMF')
+plt.ylabel('Probability')
 plt.xticks(np.arange(min(sensor_d.Temperature), max(sensor_d.Temperature)+1, 5.0))
 
 plt.sca(axes[4])
 plt.bar(pmf_e.index, pmf_e.values)
 plt.title('Sensor E')
 plt.xlabel('Temperature')
-plt.ylabel('PMF')
+plt.ylabel('Probability')
 plt.xticks(np.arange(min(sensor_e.Temperature), max(sensor_e.Temperature)+1, 5.0))
 
 fig.suptitle('PMF of the temperature per sensor', fontsize = 15, y = 1.08)
@@ -205,31 +206,31 @@ plt.sca(axes[0])
 ax = sensor_a['Temperature'].plot(kind='density')
 ax.set(xlabel = 'Temperature')
 plt.title('Sensor A')
-plt.ylabel('PDF')
+plt.ylabel('Density')
 
 plt.sca(axes[1])
 ax = sensor_b['Temperature'].plot(kind='density')
 ax.set(xlabel = 'Temperature')
 plt.title('Sensor B')
-plt.ylabel('PDF')
+plt.ylabel('Density')
 
 plt.sca(axes[2])
 ax = sensor_c['Temperature'].plot(kind='density')
 ax.set(xlabel = 'Temperature')
 plt.title('Sensor C')
-plt.ylabel('PDF')
+plt.ylabel('Density')
 
 plt.sca(axes[3])
 ax = sensor_d['Temperature'].plot(kind='density')
 ax.set(xlabel = 'Temperature')
 plt.title('Sensor D')
-plt.ylabel('PDF')
+plt.ylabel('Density')
 
 plt.sca(axes[4])
 ax = sensor_e['Temperature'].plot(kind='density')
 ax.set(xlabel = 'Temperature')
 plt.title('Sensor E')
-plt.ylabel('PDF')
+plt.ylabel('Density')
 
 plt.tight_layout()
 fig.suptitle('PDF of the temperature per sensor', fontsize = 15, y = 1.08)
@@ -284,27 +285,27 @@ fig , axes = plt.subplots(nrows = 1, ncols = 5, figsize=(20,5))
 
 plt.sca(axes[0])
 ax = sns.distplot(Wind_speed.A, kde = True, norm_hist = True)
-ax.set(xlabel = 'wind speed [m/s]')
+ax.set(xlabel = 'Wind Speed')
 plt.title('Sensor A')
 
 plt.sca(axes[1])
 ax = sns.distplot(Wind_speed.B, kde = True, norm_hist = True)
-ax.set(xlabel = 'wind speed [m/s]')
+ax.set(xlabel = 'Wind Speed')
 plt.title('Sensor B')
 
 plt.sca(axes[2])
 ax = sns.distplot(Wind_speed.C, kde = True, norm_hist = True)
-ax.set(xlabel = 'wind speed [m/s]')
+ax.set(xlabel = 'Wind Speed')
 plt.title('Sensor C')
 
 plt.sca(axes[3])
 ax = sns.distplot(Wind_speed.D, kde = True, norm_hist = True)
-ax.set(xlabel = 'wind speed [m/s]')
+ax.set(xlabel = 'Wind Speed')
 plt.title('Sensor D')
 
 plt.sca(axes[4])
 ax = sns.distplot(Wind_speed.E, kde = True, norm_hist = True)
-ax.set(xlabel = 'wind speed [m/s]')
+ax.set(xlabel = 'Wind Speed')
 plt.title('Sensor E')
 
 plt.tight_layout()
@@ -419,35 +420,35 @@ a1 = plt.hist(x=sensor_a['Wind Speed'], bins=50, cumulative=True, density = True
 plt.plot(a1[1][1:]-(a1[1][1:]-a1[1][:-1])/2,a1[0], color='k')
 plt.title('Sensor A')
 plt.xlabel('Wind Speed')
-plt.ylabel('Density')
+plt.ylabel('CDF')
 
 plt.sca(axes[1])
 b1 = plt.hist(x=sensor_b['Wind Speed'], bins=50, cumulative=True, density = True, alpha=0.7, rwidth=0.85)
 plt.plot(b1[1][1:]-(b1[1][1:]-b1[1][:-1])/2,b1[0], color='k')
 plt.title('Sensor B')
 plt.xlabel('Wind Speed')
-plt.ylabel('Density')
+plt.ylabel('CDF')
 
 plt.sca(axes[2])
 c1 = plt.hist(x=sensor_c['Wind Speed'], bins=50, cumulative=True, density = True, alpha=0.7, rwidth=0.85)
 plt.plot(c1[1][1:]-(c1[1][1:]-c1[1][:-1])/2,c1[0], color='k')
 plt.title('Sensor C')
 plt.xlabel('Wind Speed')
-plt.ylabel('Density')
+plt.ylabel('CDF')
 
 plt.sca(axes[3])
 d1 = plt.hist(x=sensor_d['Wind Speed'], bins=50, cumulative=True, density = True ,alpha=0.7, rwidth=0.85)
 plt.plot(d1[1][1:]-(d1[1][1:]-a1[1][:-1])/2,d1[0], color='k')
 plt.title('Sensor D')
 plt.xlabel('Wind Speed')
-plt.ylabel('Density')
+plt.ylabel('CDF')
 
 plt.sca(axes[4])
 e1 = plt.hist(x=sensor_d['Wind Speed'], bins=50, cumulative=True, density = True, alpha=0.7, rwidth=0.85)
 plt.plot(e1[1][1:]-(e1[1][1:]-e1[1][:-1])/2,e1[0], color='k')
 plt.title('Sensor E')
 plt.xlabel('Wind Speed')
-plt.ylabel('Density')
+plt.ylabel('CDF')
 
 plt.tight_layout()
 fig.suptitle('CDF of the wind speed per sensor', fontsize = 15, y = 1.08)
@@ -471,6 +472,8 @@ for sensor in sensor_names:
 df_temp_intervals = pd.DataFrame([sensor_list, lower_list, upper_list]).transpose()
 df_temp_intervals.columns = ['Sensor', 'Lower boundary', 'Upper boundary']
 df_temp_intervals.to_csv('confidence_intervals_temperatures.csv')
+print('The confidance intervals for temperature per sensor with a confidance level of 95% are', df_temp_intervals)
+
 
 lower_list_WS = []
 upper_list_WS = []
@@ -493,6 +496,7 @@ df_windspeed_intervals.columns = ['Sensor', 'Lower boundary',
                                   'Upper boundary']
 
 df_windspeed_intervals.to_csv('confidence_intervals_windspeed_95.csv')
+print('The confidance intervals for wind speed per sensor with a confidance level of 95% are', df_windspeed_intervals)
 
 lower_list_WS = []
 upper_list_WS = []
@@ -515,6 +519,7 @@ df_windspeed_intervals_70.columns = ['Sensor', 'Lower boundary',
                                   'Upper boundary']
 
 df_windspeed_intervals_70.to_csv('confidence_intervals_windspeed_70.csv')
+print('The confidance intervals for wind speed per sensor with a confidance level of 70% are', df_windspeed_intervals_70)
 
 #Hypothesis test
 
