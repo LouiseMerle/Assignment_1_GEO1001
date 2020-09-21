@@ -3,13 +3,9 @@
 Louise Spekking 
 4256778
 
+This script will visualize analysis on the data collected from 5 heat stress sensors placed Rijsenberg, the Netherlands, during the summer of 2020. The sensors are Kestrel 5400 and their specs are included within the repository. 
 
-This script will visualize analysis on the data collected from 5 heat stress sensors placed Rijsenberg, the Netherlands, during the summer of 2020. The sensors are Kestrel 5400 and their specs are included within the repository.
-
-
-
-
-
+Tables  and figures displayed in the command line ultility will all be saved as csv or PNG files in the root folder. 
 
 Follow the following steps to execute this code: 
 
@@ -20,4 +16,3 @@ Follow the following steps to execute this code:
 python geo1001_hw01.py
 ```
 
-The script will 
