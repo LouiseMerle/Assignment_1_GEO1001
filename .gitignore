@@ -16,3 +16,4 @@ hw01_Louise_Spekking.pdf
 *.docx
 *.zip
 /Report/
+.DS_Store
