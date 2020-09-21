@@ -14,4 +14,4 @@
 *.pages
 *.csv
 *.docx
-*.zip
+*.zip.DS_Store
