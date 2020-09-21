@@ -538,10 +538,10 @@ for sensor1 in inverted_sensor_list:
         hypothesis_dict_T[key] = values_list
 hypo_test = pd.DataFrame.from_dict(hypothesis_dict_T).transpose()
 hypo_test.columns = ['t-statistic', 'p-value']
-print(hypo_test)
+print('hypothesis test for temperature', hypo_test)
 
 #hypothesis test wind speed
-Wind_speed2 = Wind_speed.drop_na()
+Wind_speed2 = Wind_speed.dropna()
 
 hypothesis_dict_W = {}
 for sensor1 in inverted_sensor_list:
@@ -550,9 +550,7 @@ for sensor1 in inverted_sensor_list:
         values_list = []
         index = inverted_sensor_list.index(sensor1)
         sensor2 = inverted_sensor_list[index + 1]
-        print(sensor2)
         t, p = stats.ttest_rel(Wind_speed2[sensor1], Wind_speed2[sensor2])
-        print(sensor1, '-', sensor2, 't: ', t, ' p: ', p)
         values_list.append(t)
         values_list.append(p)
         key = sensor1 + '-' + sensor2
@@ -561,6 +559,7 @@ for sensor1 in inverted_sensor_list:
 hypo_test_W = pd.DataFrame.from_dict(hypothesis_dict_W).transpose()
 hypo_test_W.columns = ['t-statistic', 'p-value']
 hypo_test_W.to_csv('hypothesis_test_W.csv')
+print('Hypothesis test for wind speed', hypo_test_W)
 
 # Bonus 
 

@@ -5,7 +5,7 @@
 *.bbl
 *.blg
 *.log
-*.pdf
+hw01_Louise_Spekking.pdf
 *.aux
 *.bfc
 *.dvi
@@ -14,4 +14,5 @@
 *.pages
 *.csv
 *.docx
-*.zip.DS_Store
+*.zip
+/Report/
